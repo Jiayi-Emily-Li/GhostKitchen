@@ -1,8 +1,7 @@
 # GhostKitchen
 
 ### Conceptual Model
-![2_Conceptual_model](https://user-images.githubusercontent.com/37320474/139163991-04fc9681-31b1-4741-9b47-6cc4c21a4d09.png)
-
+![2_Conceptual_model](https://user-images.githubusercontent.com/37320474/139183694-e4e2102d-03e0-4a5a-bc3a-1efda511ced5.jpeg)
 
 ### Relational Model
-![3_Logical Model](https://user-images.githubusercontent.com/37320474/139164076-0c486496-0128-42c0-a160-442907c967ba.png)
+![3_Logical Model](https://user-images.githubusercontent.com/37320474/139183720-a85b3ba5-9421-4614-846c-8642f725b6f3.jpeg)
