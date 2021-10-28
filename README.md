@@ -5,4 +5,4 @@
 
 
 ### Relational Model
-[4_Relational Schema.pdf](https://github.com/Jiayi-Emily-Li/GhostKitchen/files/7429992/4_Relational.Schema.pdf)
+![3_Logical Model](https://user-images.githubusercontent.com/37320474/139164076-0c486496-0128-42c0-a160-442907c967ba.png)
