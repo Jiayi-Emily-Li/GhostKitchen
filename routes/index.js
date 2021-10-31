@@ -1,12 +1,17 @@
 let express = require("express");
 let router = express.Router();
 
-console.log("Setting up routes");
+const myDB = require("../db/SQLiteDB.js");
 
 /* GET home page. */
-router.get("/", function (req, res, next) {
-  //render the _index_ template with the title attribute as Express
-  res.render("index", { title: "Express" });
+router.get("/", async function (req, res, next) {
+  console.log("Got request for /");
+
+  const meals = await myDB.getMeals();
+
+  console.log("got meals", meals);
+  //render the _index_ template with the meals attribute as meals (from DB)
+  res.render("index", { meals: meals });
 });
 
 /* GET delete page. */
