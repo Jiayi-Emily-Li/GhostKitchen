@@ -17,20 +17,96 @@ async function getBrands() {
   return await db.all("SELECT * FROM Virtual_Brand");
 }
 
+async function getOrders(userID) {
+  const db = await connect();
+  const query = await db.prepare(
+    `SELECT o.id, m.meal_name, m.description, m.price, o.quantity, pt.type
+     FROM Orders AS o
+     JOIN Meal AS m
+     ON o.meal_id = m.id
+     JOIN Pickup_Type AS pt
+     ON o.pickup_id = pt.id
+     WHERE o.customer_id=:userID AND o.pickup_time IS NULL`);
+
+  query.bind({
+    ":userID": userID,
+  })
+  return await query.all();
+}
+
+async function getOrderByID(userID, orderID) {
+  const db = await connect();
+  const query = await db.prepare(
+    `SELECT o.id AS order_id, o.quantity,
+            m.id AS meal_id, m.meal_name, m.description,
+            pt.id AS pickup_id, pt.type,
+            l.id AS location_id, l.address
+     FROM Orders AS o
+     JOIN Meal AS m
+     ON o.meal_id = m.id
+     JOIN Pickup_Type AS pt
+     ON o.pickup_id = pt.id
+     JOIN Location AS l
+     ON o.location_id = l.id
+     WHERE o.customer_id=:userID AND o.id=:orderID AND pickup_time IS NULL`);
+
+  query.bind({
+    ":userID": userID,
+    ":orderID": orderID,
+  });
+  console.log(`user id is ${userID}`);
+  console.log(`order id is ${orderID}`);
+  return await query.get();
+}
+
+async function updateOrder(orderID, quantity, pickupID, userID) {
+  const db = await connect();
+  const query = await db.prepare(
+    `UPDATE Orders
+     SET pickup_id=:pickupID,
+         quantity=:quantity
+     WHERE id=:orderID AND customer_id=:userID`);
+
+  query.bind({
+    ":pickupID": pickupID,
+    ":quantity": quantity,
+    ":orderID": orderID,
+    ":userID": userID,
+  });
+  console.log(`user id is ${userID}`);
+  console.log(`order id is ${orderID}`);
+  return await query.get();
+}
+
+async function deleteOrder(orderToDelete) {
+  const db = await connect();
+
+  const query = await db.prepare(
+    `DELETE FROM
+    Orders
+    WHERE id = :theIDToDelete
+    `);
+
+  query.bind({
+    ":theIDToDelete": orderToDelete,
+  });
+  return await query.run();
+}
+
 //to be used in index.ejs
 async function getMealsBy(brandID) {
   const db = await connect();
   const query = await db.prepare("SELECT * FROM Meal WHERE brand_id=:brandID");
-  query.bind({":brandID": brandID})
-  return await query.all()
+  query.bind({":brandID": brandID});
+  return await query.all();
 }
 
 //to be used in order.ejs
 async function getMeal(mealID) {
   const db = await connect();
   const query = await db.prepare("SELECT * FROM Meal WHERE id=:mealID");
-  query.bind({":mealID": mealID})
-  return await query.get()
+  query.bind({":mealID": mealID});
+  return await query.get();
 }
 
 async function getPickup() {
@@ -45,7 +121,7 @@ async function getLocations() {
 
 async function createOrder(order, userID) {
   const db = await connect();
-  const order_time = new Date(Date.now())
+  const order_time = new Date(Date.now());
 
   const query = await db.prepare(`
   INSERT INTO
@@ -59,7 +135,7 @@ async function createOrder(order, userID) {
     ":customer_id": userID,
     ":meal_id": order.mealID,
     ":pickup_id": order.pickup
-  }
+  };
 
   console.log("will write these values for order:");
   console.log(vals);
@@ -67,24 +143,7 @@ async function createOrder(order, userID) {
   query.bind(vals);
 
   return await query.run();
-}
-
-async function createPickupType(type) {
-  const db = await connect();
-
-  const query = await db.prepare(`
-  INSERT INTO
-    Pickup_Type(type)
-    VALUES (:type);
-  `);
-  const vals = {
-    ":type": type,
-  }
-
-  console.log(vals);
-  query.bind(vals);
-
-  return await query.run();
+                    //^^ run when a query doesn't return anything
 }
 
 async function getUser(userId) {
@@ -103,5 +162,8 @@ module.exports = {
   getPickup,
   getLocations,
   createOrder,
-  createPickupType,
+  getOrders,
+  deleteOrder,
+  getOrderByID,
+  updateOrder,
 };
