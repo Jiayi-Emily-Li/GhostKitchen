@@ -77,10 +77,10 @@ router.post("/user/orders/:orderID", async function (req, res, next) {
   const quantity = req.body.quantity;
   const pickupID = req.body.pickup;
 
-  await myDB.updateOrder(orderID, quantity, pickupID, );
+  await myDB.updateOrder(orderID, quantity, pickupID, userID);
 
   console.log(`Order updated`);
-  res.redirect("/confirmation");
+  res.redirect("/user/orders");
 });
 
 /* GET brands page. */
