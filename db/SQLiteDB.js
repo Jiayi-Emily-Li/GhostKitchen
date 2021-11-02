@@ -39,15 +39,12 @@ async function getOrderByID(userID, orderID) {
   const query = await db.prepare(
     `SELECT o.id AS order_id, o.quantity,
             m.id AS meal_id, m.meal_name, m.description,
-            pt.id AS pickup_id, pt.type,
-            l.id AS location_id, l.address
+            pt.id AS pickup_id, pt.type
      FROM Orders AS o
      JOIN Meal AS m
      ON o.meal_id = m.id
      JOIN Pickup_Type AS pt
      ON o.pickup_id = pt.id
-     JOIN Location AS l
-     ON o.location_id = l.id
      WHERE o.customer_id=:userID AND o.id=:orderID AND pickup_time IS NULL`);
 
   query.bind({
