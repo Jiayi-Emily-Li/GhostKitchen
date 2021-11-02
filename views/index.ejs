@@ -9,37 +9,28 @@
 
 </head>
 <body>
-  <div class="container"> 
-    <nav>
-    </nav>
+  <div class="container">
     <main class="row">
       <h1 class="display-5">GhostKitchen App</h1>
-      <h2>Menu:</h2>
-      <table class="table table-hover">
-        <thead>
-          <tr> 
-            <th scope="col">Name</th>
-            <th scope="col">Description</th>
-            <th scope="col">Calories</th>
-            <th scope="col">Price<th>
-          </tr>
-        </thead>
-        <tbody>
-          <% meals.forEach(function (f) {%>
-          <tr>
-            <td scope="col"><%= f.meal_name%></td>
-            <td scope="col"><%= f.description%></td>
-            <td scope="col"><%= f.calories%></td>
-            <td scope="col">$<%= f.price %></td>
-            <td><button type="submit" class="btn btn-primary">Order</button></td>
-          </tr>
-           <% }) %>
-        </tbody>
-      </table>
+      <h2 >Pick a brand:</h2>
+
+      <div class="btn-group">
+          <ul>
+            <% brands.forEach(function (f) {%>
+            <form action="/brands/<%= f.id %>/menu/" method="GET">
+            <li>
+              <button type="submit"
+                      class="btn btn-default">
+                      <%= f.brand_name%>
+              </button>
+            </li>
+            </form>
+            <% }) %>
+          </ul>
+      </div>
     </main>
 
   </div>
-  
-  
+
 </body>
 </html>
