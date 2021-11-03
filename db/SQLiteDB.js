@@ -167,6 +167,13 @@ async function createMeal(newMeal, brandID){
   return await query.run();
 }
 
+async function getBrandsBy(brandID) {
+  const db = await connect();
+  const query = await db.prepare("SELECT * FROM Virtual_Brand WHERE id=:brandID");
+  query.bind({":brandID": brandID});
+  return await query.get();
+}
+
 module.exports = {
   getMealsBy,
   getUser,
@@ -179,5 +186,6 @@ module.exports = {
   deleteOrder,
   getOrderByID,
   updateOrder,
-  createMeal
+  createMeal,
+  getBrandsBy
 };
