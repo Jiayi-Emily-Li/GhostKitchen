@@ -179,4 +179,5 @@ module.exports = {
   deleteOrder,
   getOrderByID,
   updateOrder,
+  createMeal
 };

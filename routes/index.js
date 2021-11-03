@@ -23,6 +23,30 @@ router.get("/user", async function (req, res, next) {
   res.render("user", { user: user });
 });
 
+/* GET Admin (brands) page. */
+router.get("/admin", async function (req, res, next){
+  
+  const brands = await myDB.getBrands();
+
+  console.log("got brands", brands);
+
+  //render the _adminBrands_ template with the brands attribute as brands (from DB)
+  res.render("adminBrands", { brands: brands });
+});
+
+/*GET Admin (meals) page. */
+router.get("/adminBrands/:brandID/adminMeals", async function (req, res, next) {
+  //params come with GET, brandID is in params
+  console.log(`brandId is ${req.params.brandID}`);
+
+  const meals = await myDB.getMealsBy(req.params.brandID);
+  const brandID = req.params.brandID;
+  const brands = await myDB.getBrandsBy(brandID);
+  console.log(brands);
+  //render the _adminMeals_ template with the meals attribute as meals (from DB)
+  res.render("adminMeals", { meals: meals, brandID : brandID, brands: brands});
+});
+
 /* GET orders page. */
 router.get("/user/orders", async function (req, res, next) {
   const user = req.user;
