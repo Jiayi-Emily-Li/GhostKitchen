@@ -47,6 +47,21 @@ router.get("/adminBrands/:brandID/adminMeals", async function (req, res, next) {
   res.render("adminMeals", { meals: meals, brandID : brandID, brands: brands});
 });
 
+/*POST create meals. */
+router.post("/adminMeals", async function (req, res, next) {
+  console.log("Got post create/meal");
+  
+  const meal = req.body;
+  const brandID = req.body.brandID;
+  console.log("got create meal", meal);
+
+  await myDB.createMeal(meal, brandID);
+
+  console.log("Meal created");
+
+  res.redirect(`/adminBrands/${brandID}/adminMeals`);
+});
+
 /* GET orders page. */
 router.get("/user/orders", async function (req, res, next) {
   const user = req.user;
