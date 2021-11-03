@@ -151,6 +151,22 @@ async function getUser(userId) {
   return await query.get()
 }
 
+async function createMeal(newMeal, brandID){
+  const db = await connect();
+  const query = await db.prepare(`INSERT INTO
+  Meal(meal_name, description, calories, price, brand_id)
+  VALUES (:meal_name, :description, :calories, :price, :brand_id)
+`);
+  query.bind({
+    ":meal_name": newMeal.meal_name,
+    ":description": newMeal.description,
+    ":calories": newMeal.calories,
+    ":price": newMeal.price,
+    ":brand_id": brandID,
+});
+  return await query.run();
+}
+
 module.exports = {
   getMealsBy,
   getUser,
