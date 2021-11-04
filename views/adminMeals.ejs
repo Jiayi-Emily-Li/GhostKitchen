@@ -14,7 +14,7 @@
            
             <h1 class="display-5">GhostKitchen App</h1>
             <div class="col-8">
-                <h3> Creating menu for <%= brands.brand_name %> </h3>
+         
             <h2>Menu:</h2>
             <table class="table table-hover">
               <thead>
@@ -35,7 +35,7 @@
                       <td scope="col">$<%= f.price %></td>
                       <td>
                         <form action="/adminMeals/<%= f.id %>" method="GET">
-                            <input type="hidden" name="mealID" value="<%= f.id %>">
+                            <input type="hidden" name="brandID" value="<%= brandID %>">
                             <button type="submit" class="btn btn-primary">
                                 UPDATE
                             </button>
@@ -43,7 +43,7 @@
                     </td>
                     <td>
                         <form action="/adminMeals/delete" method="POST">
-                            <input type="hidden" name="mealID" value="<%= f.id %>">
+                            <input type="hidden" name="brandID" value="<%= brandID %>">
                             <button type="submit" class="btn btn-danger">
                                 DELETE
                             </button>
@@ -55,13 +55,13 @@
               </tbody>
             </table>
             </div>
-            <!--/.col-8 -->>
+            <!--/.col-8 -->
             <div class="col-4">
                 <h2>Create Meal</h2>
                 <form action="/adminMeals" method="POST">
                     <div>
                         <label class="form-label">
-                            >Meal Name:
+                            Meal Name:
                             <input
                                 required="true"
                                 name="meal_name"
@@ -71,7 +71,7 @@
                     </div>
                     <div>
                         <label class="form-label">
-                            >Description:
+                            Description:
                             <input
                                 required="true"
                                 name="description"
@@ -81,7 +81,7 @@
                     </div>
                     <div>
                         <label class="form-label">
-                            >Calories:
+                            Calories:
                             <input
                                 required="true"
                                 name="calories"
@@ -91,7 +91,7 @@
                     </div>
                     <div>
                         <label class="form-label">
-                            >Price:
+                            Price:
                             <input
                                 required="true"
                                 name="price"
