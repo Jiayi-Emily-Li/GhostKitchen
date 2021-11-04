@@ -62,7 +62,7 @@ router.post("/admin/brands/adminMeals/create", async function (req, res, next) {
   await myDB.createMeal(meal, brandID);
 
   console.log("Meal created");
-
+  
 
   res.redirect(`/admin/brands/${brandID}/adminMeals`);
 });
