@@ -11,10 +11,10 @@
 <body>
     <div class="container">
         <main class="row">
-           
+
             <h1 class="display-5">GhostKitchen App</h1>
             <div class="col-8">
-         
+
             <h2>Menu:</h2>
             <table class="table table-hover">
               <thead>
@@ -28,7 +28,7 @@
               <tbody>
                 <% meals.forEach(function (f) {%>
                     <tr>
-                      <form action="/adminMeals/<%= f.id %>" method="GET">
+                      <!-- <form action="/adminMeals/<%= f.id %>" method="GET"> -->
                       <td scope="col"><%= f.meal_name%></td>
                       <td scope="col"><%= f.description%></td>
                       <td scope="col"><%= f.calories%></td>
@@ -42,14 +42,15 @@
                         </form>
                     </td>
                     <td>
-                        <form action="/adminMeals/delete" method="POST">
+                        <form action="/admin/brands/adminMeals/delete" method="POST">
                             <input type="hidden" name="brandID" value="<%= brandID %>">
+                            <input type="hidden" name="mealID" value="<%= f.id %>">
                             <button type="submit" class="btn btn-danger">
                                 DELETE
                             </button>
                         </form>
                     </td>
-                      </form>
+                      <!-- </form> -->
                     </tr>
                      <% }) %>
               </tbody>
@@ -58,7 +59,8 @@
             <!--/.col-8 -->
             <div class="col-4">
                 <h2>Create Meal</h2>
-                <form action="/adminMeals" method="POST">
+                <form action="/admin/brands/adminMeals/create" method="POST">
+                    <input type="hidden" name="brandID" value="<%= brandID %>">
                     <div>
                         <label class="form-label">
                             Meal Name:
@@ -99,8 +101,7 @@
                                 class="form-control"
                         /></label>
                     </div>
-                    <button type="submit" class="btn btn-primary" name="brandID"
-                    value="<%= brandID %>">Create</button>
+                    <button type="submit" class="btn btn-primary">Create</button>
                 </form>
             </div>
             <!-- /.col-4 -->

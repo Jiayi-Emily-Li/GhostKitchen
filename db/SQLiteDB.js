@@ -196,17 +196,18 @@ async function updateMeal(mealID, brandID, meal_name, description, calories, pri
   return await query.get();
 }
 
-async function deleteMeal(mealToDelete) {
+async function deleteMeal(brandID, mealID) {
   const db = await connect();
 
   const query = await db.prepare(
-    `DELETE FROM
-    Meal
-    WHERE id = :theIDToDelete
+    `DELETE
+    FROM Meal
+    WHERE id=:mealID AND brand_id=:brand_ID
     `);
 
   query.bind({
-    ":theIDToDelete": mealToDelete,
+    ":mealID": mealID,
+    ":brand_ID": brandID,
   });
   return await query.run();
 }
