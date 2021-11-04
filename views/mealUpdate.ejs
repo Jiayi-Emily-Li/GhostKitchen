@@ -19,7 +19,15 @@
         <hr />
         <div class="row">
             <div class="col-4">
-                <form action="/adminMeals/<%= mealDetails.meal_id %>" method="POST">
+                <form action="/adminMeals/<%= mealDetails.id %>" method="POST">
+                  <!-- <div>
+                    <input
+                        name="brandID"
+                        type="hidden"
+                        class="form-control"
+                        value="<%= mealDetails.brand_id %>"
+                    />
+                  </div> -->
                     <div>
                       <label class="form-label"
                       >Meal Name:
@@ -72,7 +80,7 @@
                     <button type="submit"
                     class="btn btn-primary"
                     name="brandID"
-                    value="<%= brandID %>"
+                    value="<%= mealDetails.brand_id %>"
                     >Update</button>
             </div>
             </form>

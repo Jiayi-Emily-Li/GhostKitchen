@@ -38,14 +38,16 @@ router.get("/admin", async function (req, res, next){
 /*GET Admin (meals) page. */
 router.get("/adminBrands/:brandID/adminMeals", async function (req, res, next) {
   //params come with GET, brandID is in params
+  console.log("Got request for meals page.");
   console.log(`brandId is ${req.params.brandID}`);
 
   const meals = await myDB.getMealsBy(req.params.brandID);
   const brandID = req.params.brandID;
+  //const brandID = await myDB.getBrandIDBy(mealID);
   const brands = await myDB.getBrandsBy(brandID);
   console.log(brands);
   //render the _adminMeals_ template with the meals attribute as meals (from DB)
-  res.render("adminMeals", { meals: meals, brandID : brandID, brands: brands});
+  res.render("adminMeals", { meals: meals, brandID: brandID, brands: brands});
 });
 
 /*POST create meals. */
@@ -54,11 +56,13 @@ router.post("/adminMeals", async function (req, res, next) {
   
   const meal = req.body;
   const brandID = req.body.brandID;
+  console.log(`expect${brandID}`);
   console.log("got create meal", meal);
 
   await myDB.createMeal(meal, brandID);
 
   console.log("Meal created");
+  
 
   res.redirect(`/adminBrands/${brandID}/adminMeals`);
 });
@@ -73,6 +77,7 @@ router.get("/adminMeals/:mealID", async function (req, res, next) {
   console.log("got meal details", mealID);
 
   const mealDetails = await myDB.getMeal(mealID);
+  //const brandID = await myDB.getBrandIDBy(mealID);
 
   console.log("meal details", mealDetails);
   res.render("mealUpdate", {
@@ -82,7 +87,7 @@ router.get("/adminMeals/:mealID", async function (req, res, next) {
 
 /* POST update adminMeals page. */
 router.post("/adminMeals/:mealID", async function (req, res, next) {
-  console.log("got update request")
+  console.log("got update POST request");
   console.log(req.body);
 
   const mealID = req.params.mealID;
@@ -91,7 +96,8 @@ router.post("/adminMeals/:mealID", async function (req, res, next) {
   const description = req.body.description;
   const calories = req.body.calories;
   const price = req.body.price;
-
+  //const brandID = await myDB.getBrandIDBy(mealID);
+  console.log(`expect post ${brandID}`);
   await myDB.updateMeal(mealID, brandID, meal_name, description, calories, price);
 
   console.log(`Meal updated`);
@@ -103,11 +109,12 @@ router.post("/adminMeals/delete", async function (req, res) {
   console.log("Got post delete meal");
 
   const meal = req.body;
-  const brandID = req.params.brandID;
-
+  
+  //const brandID = req.body.brandID;
+  const brandID = await myDB.getBrandIDBy(meal.mealID);
   console.log("got delete meal", meal);
 
-  await myDB.deleteMeal(meal.mealID);
+  await myDB.deleteMeal(meal);
 
   console.log("Meal deleted");
 
