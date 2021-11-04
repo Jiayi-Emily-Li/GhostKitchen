@@ -23,6 +23,7 @@ router.get("/user", async function (req, res, next) {
   res.render("user", { user: user });
 });
 
+/* ------Jiayi----- */
 /* GET Admin (brands) page. */
 router.get("/admin", async function (req, res, next){
   
@@ -61,6 +62,59 @@ router.post("/adminMeals", async function (req, res, next) {
 
   res.redirect(`/adminBrands/${brandID}/adminMeals`);
 });
+
+/* GET update adminMeals page. */
+router.get("/adminMeals/:mealID", async function (req, res, next) {
+  console.log("Got adminMeals update");
+
+  const mealID = req.params.mealID;
+  const brandID = req.body.brandID;
+
+  console.log("got meal details", mealID);
+
+  const mealDetails = await myDB.getMeal(mealID);
+
+  console.log("meal details", mealDetails);
+  res.render("mealUpdate", {
+    mealDetails: mealDetails, brandID: brandID
+  });
+});
+
+/* POST update adminMeals page. */
+router.post("/adminMeals/:mealID", async function (req, res, next) {
+  console.log("got update request")
+  console.log(req.body);
+
+  const mealID = req.params.mealID;
+  const brandID = req.body.brandID;
+  const meal_name = req.body.meal_name;
+  const description = req.body.description;
+  const calories = req.body.calories;
+  const price = req.body.price;
+
+  await myDB.updateMeal(mealID, brandID, meal_name, description, calories, price);
+
+  console.log(`Meal updated`);
+  res.redirect(`/adminBrands/${brandID}/adminMeals`);
+});
+
+/* POST delete meal. */
+router.post("/adminMeals/delete", async function (req, res) {
+  console.log("Got post delete meal");
+
+  const meal = req.body;
+  const brandID = req.params.brandID;
+
+  console.log("got delete meal", meal);
+
+  await myDB.deleteMeal(meal.mealID);
+
+  console.log("Meal deleted");
+
+  res.redirect(`/adminBrands/${brandID}/adminMeals`);
+});
+
+/* -------Jiayi-------*/
 
 /* GET orders page. */
 router.get("/user/orders", async function (req, res, next) {

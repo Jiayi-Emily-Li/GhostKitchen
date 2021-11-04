@@ -35,7 +35,7 @@
                       <td scope="col">$<%= f.price %></td>
                       <td>
                         <form action="/adminMeals/<%= f.id %>" method="GET">
-                            <!-- <input type="hidden" name="orderID" value="<%= f.id %>"> -->
+                            <input type="hidden" name="mealID" value="<%= f.id %>">
                             <button type="submit" class="btn btn-primary">
                                 UPDATE
                             </button>
@@ -43,7 +43,7 @@
                     </td>
                     <td>
                         <form action="/adminMeals/delete" method="POST">
-                            <!-- <input type="hidden" name="orderID" value="<%= f.id %>"> -->
+                            <input type="hidden" name="mealID" value="<%= f.id %>">
                             <button type="submit" class="btn btn-danger">
                                 DELETE
                             </button>

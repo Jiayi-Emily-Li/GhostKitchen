@@ -151,6 +151,7 @@ async function getUser(userId) {
   return await query.get()
 }
 
+/* ------Jiayi------ */
 async function createMeal(newMeal, brandID){
   const db = await connect();
   const query = await db.prepare(`INSERT INTO
@@ -174,6 +175,42 @@ async function getBrandsBy(brandID) {
   return await query.get();
 }
 
+async function updateMeal(mealID, brandID, meal_name, description, calories, price) {
+  const db = await connect();
+  const query = await db.prepare(
+    `UPDATE Meal
+     SET meal_name=:meal_name,
+         description=:description,
+         calories=:calories,
+         price=:price
+     WHERE id=:mealID AND brand_id=:brandID`);
+
+  query.bind({
+    "mealID": mealID,
+    "brandID": brandID,
+    "meal_name": meal_name,
+    "description": description,
+    "calories": calories,
+    "price": price
+  });
+  return await query.get();
+}
+
+async function deleteMeal(mealToDelete) {
+  const db = await connect();
+
+  const query = await db.prepare(
+    `DELETE FROM
+    Meal
+    WHERE id = :theIDToDelete
+    `);
+
+  query.bind({
+    ":theIDToDelete": mealToDelete,
+  });
+  return await query.run();
+}
+
 module.exports = {
   getMealsBy,
   getUser,
@@ -187,5 +224,7 @@ module.exports = {
   getOrderByID,
   updateOrder,
   createMeal,
-  getBrandsBy
+  getBrandsBy,
+  updateMeal,
+  deleteMeal
 };
