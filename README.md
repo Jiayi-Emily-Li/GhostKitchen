@@ -28,6 +28,29 @@ All the above steps can be found as separate files in our repository.
 ### Relational Model
 ![3_Logical Model](https://user-images.githubusercontent.com/37320474/139183720-a85b3ba5-9421-4614-846c-8642f725b6f3.jpeg)
 
+## Using the app
+
+1) Clone the repo
+2) Install the dependencies
+
+```
+npm install
+```
+
+
+3) Start the server
+
+```
+npm start
+```
+
+4) Point your browser to http://locahost:3000
+
+# Work Distribution
+Jiayi Li has worked on creating the Admin page and CRUD Meal table.
+
+Katerina Bosko has worked on creating th User page and CRUD Order and Customer tables.
+
 # Acknowledgement
 The data for customers table was generated using [ https://www.mockaroo.com/](https://www.mockaroo.com/)
 
