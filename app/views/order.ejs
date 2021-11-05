@@ -10,65 +10,71 @@
 </head>
 
 <body>
-  <div class="container">
-    <div class="jumbotron">
-      <div class="display-4">Your Order</div>
-    </div>
-    <hr />
-    <div class="row">
-      <div class="col-4">
-        <form action="/order" method="POST">
-          <div class="display-6 text-capitalize">
-            <%= meal.meal_name %>
-          </div>
-          <br />
-          <div class="lead">
-            <%= meal.description %>
-          </div>
-          <br />
-          <div>
-            <label for="quantity-select" style="font-weight: bold;">Quantity</label>
-            <select class="form-control" id="quantity-select" name="quantity">
-              <% for (let i=1; i<=20; i++) {%>
+  <main>
+    <div class="container">
+      <div>
+        <h3>
+          GhostKitchen App
+        </h3>
+      </div>
+      <div class="p-4">
+        <div class="display-4">
+          Your Order
+        </div>
+        <hr />
+        <div class="col-4">
+          <form action="/user/brands/<%= brandID %>/menu/<%= meal.id %>/order/create" method="POST">
+            <div class="display-6 text-capitalize">
+              <%= meal.meal_name %>
+            </div>
+            <br />
+            <div class="lead">
+              <%= meal.description %>
+            </div>
+            <br />
+            <div>
+              <label for="quantity-select" style="font-weight: bold;">Quantity:</label>
+              <select class="form-control" id="quantity-select" name="quantity">
+                <% for (let i=1; i<=20; i++) {%>
                   <option value="<%= i %>" <% if(i===1) { %> selected <% } %>
-                          >
-                          <%= i %>
+                      >
+                      <%= i %>
                   </option>
                   <% } %>
-          </select>
-          </div>
-          <br />
-          <div>
-            <label for="pickup-select" style="font-weight: bold;">Pickup Type</label>
-            <select class="form-control" id="pickup-select" name="pickup">
-              <% pickups.forEach(function (f) {%>
-                <option value="<%= f.id %>">
-                  <%= f.type%>
-                </option>
-                <% }) %>
-            </select>
-          </div>
-          <br />
-          <div>
-            <label for="location-select" style="font-weight: bold;">Location</label>
-            <select class="form-control" id="location-select" name="location">
-              <% locations.forEach(function (f) {%>
-                <option value="<%= f.id %>">
-                  <%= f.address%>, <%= f.state%>
-                </option>
-                <% }) %>
-            </select>
-          </div>
-          <br />
-          <div>
-            <button type="submit" class="btn btn-primary"
-                    style="width: 100%;" name="mealID"
-                    value="<%= meal.id %>">Checkout</button>
-          </div>
-        </form>
+              </select>
+            </div>
+            <br />
+            <div>
+              <label for="pickup-select" style="font-weight: bold;">Pickup Type:</label>
+              <select class="form-control" id="pickup-select" name="pickup">
+                <% pickups.forEach(function (f) {%>
+                  <option value="<%= f.id %>">
+                    <%= f.type%>
+                  </option>
+                  <% }) %>
+              </select>
+            </div>
+            <br />
+            <div>
+              <label for="location-select" style="font-weight: bold;">Location:</label>
+              <select class="form-control" id="location-select" name="location">
+                <% locations.forEach(function (f) {%>
+                  <option value="<%= f.id %>">
+                    <%= f.address%>, <%= f.state%>
+                  </option>
+                  <% }) %>
+              </select>
+            </div>
+            <br />
+            <div>
+              <button type="submit" class="btn btn-primary" style="width: 100%;" name="mealID"
+                value="<%= meal.id %>">Checkout</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
+  </main>
 
 </body>
 

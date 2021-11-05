@@ -17,7 +17,7 @@ async function getBrands() {
   return await db.all("SELECT * FROM Virtual_Brand");
 }
 
-async function getOrders(userID) {
+async function getOrdersBy(userID) {
   const db = await connect();
   const query = await db.prepare(
     `SELECT o.id, m.meal_name, m.description, m.price, o.quantity, pt.type
@@ -45,7 +45,7 @@ async function getOrderByID(userID, orderID) {
      ON o.meal_id = m.id
      JOIN Pickup_Type AS pt
      ON o.pickup_id = pt.id
-     WHERE o.customer_id=:userID AND o.id=:orderID AND pickup_time IS NULL`);
+     WHERE o.customer_id=:userID AND o.id=:orderID AND o.pickup_time IS NULL`);
 
   query.bind({
     ":userID": userID,
@@ -72,7 +72,7 @@ async function updateOrder(orderID, quantity, pickupID, userID) {
   });
   console.log(`user id is ${userID}`);
   console.log(`order id is ${orderID}`);
-  return await query.get();
+  return await query.run();
 }
 
 async function deleteOrder(orderToDelete) {
@@ -180,21 +180,26 @@ async function updateMeal(mealID, brandID, meal_name, description, calories, pri
   const query = await db.prepare(
     `UPDATE Meal
      SET meal_name=:meal_name,
-         description=:description,
-         calories=:calories,
-         price=:price
+        description=:description,
+        calories=:calories,
+        price=:price
      WHERE id=:mealID AND brand_id=:brandID`);
 
-  query.bind({
-    "mealID": mealID,
-    "brandID": brandID,
-    "meal_name": meal_name,
-    "description": description,
-    "calories": calories,
-    "price": price
-  });
-  return await query.get();
+  const vals = {
+    ":meal_name": meal_name,
+    ":description": description,
+    ":calories": calories,
+    ":price": price,
+    ":mealID": mealID,
+    ":brandID": brandID,
+  }
+
+  console.log(vals);
+  query.bind(vals);
+
+  return await query.run();
 }
+
 
 async function deleteMeal(brandID, mealID) {
   const db = await connect();
@@ -209,8 +214,44 @@ async function deleteMeal(brandID, mealID) {
     ":mealID": mealID,
     ":brand_ID": brandID,
   });
-  return await query.run();
+  return await query.get();
 }
+
+async function getAllCurrentOrders() {
+  const db = await connect();
+  const query = await db.prepare(
+    `SELECT o.id, br.id AS brand_id, br.brand_name, m.meal_name, o.quantity, pt.type
+     FROM Orders AS o
+     JOIN Meal AS m
+     ON o.meal_id = m.id
+     JOIN Pickup_Type AS pt
+     ON o.pickup_id = pt.id
+     JOIN Virtual_Brand AS br
+     ON br.id=m.brand_id
+     WHERE o.pickup_time IS NULL`);
+
+  return await query.all();
+}
+
+async function updatePickupTime(orderID) {
+  const db = await connect();
+
+  const pickup_time = new Date(Date.now());
+  const query = await db.prepare(
+    `UPDATE Orders
+    SET pickup_time=:pickup_time
+    WHERE id=:orderID`);
+
+    const vals = {
+      ":orderID": orderID,
+      ":pickup_time": pickup_time,
+    }
+
+    console.log(vals);
+    query.bind(vals);
+}
+
+
 
 module.exports = {
   getMealsBy,
@@ -220,12 +261,14 @@ module.exports = {
   getPickup,
   getLocations,
   createOrder,
-  getOrders,
+  getOrdersBy,
   deleteOrder,
   getOrderByID,
   updateOrder,
   createMeal,
   getBrandsBy,
   updateMeal,
-  deleteMeal
+  deleteMeal,
+  getAllCurrentOrders,
+  updatePickupTime,
 };

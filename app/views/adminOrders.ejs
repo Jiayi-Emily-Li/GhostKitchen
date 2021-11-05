@@ -20,49 +20,41 @@
             </div>
             <div class="p-4">
                 <div class="display-4">
-                    Your current Orders
+                    Current Orders
                 </div>
                 <br/>
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Description</th>
+                            <th scope="col">Order #</th>
+                            <th scope="col">Brand</th>
+                            <th scope="col">Meal</th>
                             <th scope="col">Quantity</th>
-                            <th scope="col">Total</th>
                             <th scope="col">Pickup Type</th>
                         </tr>
                     </thead>
                     <tbody>
                         <% orders.forEach(function (f) {%>
-                            <tr>
+                                <td scope="col">
+                                    <%= f.id %>
+                                </td>
+                                <td scope="col">
+                                    <%= f.brand_name %>
+                                </td>
                                 <td scope="col" style="text-transform:capitalize">
                                     <%= f.meal_name %>
                                 </td>
                                 <td scope="col">
-                                    <%= f.description%>
-                                </td>
-                                <td scope="col">
                                     <%= f.quantity %>
-                                </td>
-                                <td scope="col">
-                                    $<%= f.price * f.quantity %>
                                 </td>
                                 <td scope="col" style="text-transform:capitalize">
                                     <%= f.type %>
                                 </td>
                                 <td>
-                                    <form action="/user/orders/<%= f.id %>" method="GET">
-                                        <button type="submit" class="btn btn-primary">
-                                            UPDATE
-                                        </button>
-                                    </form>
-                                </td>
-                                <td>
-                                    <form action="/user/orders/delete" method="POST">
-                                        <input type="hidden" name="orderID" value="<%= f.id %>">
-                                        <button type="submit" class="btn btn-danger">
-                                            DELETE
+                                    <form action="/admin/orders/<%= f.id %>/update" method="POST">
+                                        <button type="submit" class="btn btn-danger"
+                                        name="orderID" value=<%= f.id %>>
+                                            PICKED UP
                                         </button>
                                     </form>
                                 </td>
@@ -71,7 +63,7 @@
                             <% }) %>
                     </tbody>
                 </table>
-                <form action="/user" method="GET">
+                <form action="/admin" method="GET">
                     <button type="submit" class="btn btn-primary" style="width: 30%;">
                     Home
                     </button>
