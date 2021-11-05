@@ -22,6 +22,8 @@ We also run several SQL queries (7) that could be of potential interest to "Gold
 All the above steps can be found as separate files in our repository.
 *Note*: we changed the name of Order table to Orders in physical implementation part because Order is a keyword in SQLite.
 
+Check out our **GhostKitchen app** that was implemented using Express framework for Node.js, SQLite and Bootstrap.
+
 ### Conceptual Model
 ![2_Conceptual_model](https://user-images.githubusercontent.com/37320474/139183694-e4e2102d-03e0-4a5a-bc3a-1efda511ced5.jpeg)
 
@@ -30,7 +32,7 @@ All the above steps can be found as separate files in our repository.
 
 ## Using the app
 
-1) Clone the repo
+1) Clone the repo and cd into `app`
 2) Install the dependencies
 
 ```
@@ -47,11 +49,11 @@ npm start
 4) Point your browser to http://locahost:3000
 
 # Work Distribution
-Jiayi Li has worked on creating the Admin page and CRUD Meal table.
+Jiayi Li worked on creating the Admin page and CRUD Meal table.
 
-Katerina Bosko has worked on creating th User page and CRUD Order and Customer tables.
+Katerina Bosko worked on creating th User page and CRUD Order table.
 
 # Acknowledgement
 The data for customers table was generated using [ https://www.mockaroo.com/](https://www.mockaroo.com/)
 
-This is a project for a Database Management Systems class at Northeastern University (Silicon Valley campus).
+This is a project for a Database Management Systems class at Northeastern University (Silicon Valley campus) taught by [John Alexis Guerra Gómez]/(https://github.com/john-guerra)
