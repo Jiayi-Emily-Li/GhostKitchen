@@ -249,6 +249,7 @@ async function updatePickupTime(orderID) {
 
     console.log(vals);
     query.bind(vals);
+    return await query.run();
 }
 
 
