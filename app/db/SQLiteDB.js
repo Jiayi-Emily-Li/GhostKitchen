@@ -244,7 +244,7 @@ async function updatePickupTime(orderID) {
 
     const vals = {
       ":orderID": orderID,
-      ":pickup_time": pickup_time,
+      ":pickup_time": pickup_time.toLocaleString(),
     }
 
     console.log(vals);
